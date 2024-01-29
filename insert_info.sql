@@ -1,59 +1,8 @@
-CREATE TABLE Cinema(
-	Cinema_id serial PRIMARY KEY NOT NULL,
-	Name varchar(50) NOT NULL,
-	City varchar(50) NOT NULL,
-	Address text NOT NULL,
-	Info text NOT NULL,
-	Score float CONSTRAINT Score_range CHECK (Score > 0 and Score < 10 )NOT NULL,
-	Hall_num int NOT NULL
-);
-
-CREATE TABLE Movie (
-	Movie_id serial PRIMARY KEY NOT NULL,
-	Name VARCHAR(50) NOT NULL,
-	genre VARCHAR(50) NOT NULL,
-	rate int CONSTRAINT rate_range CHECK ( rate > 0 and rate < 10)NOT NULL,
-	description text NOT NULL
-);
-
-CREATE TABLE Users (
-	User_id serial PRIMARY KEY,
-	First_name VARCHAR(25) NOT NULL,
-	Last_name VARCHAR(25),
-	email VARCHAR(50) UNIQUE,
-	Phone bigint NOT NULL,
-	Birthday date
-);
-
-
-CREATE TABLE Hall (
-	Hall_id serial PRIMARY KEY NOT NULL,
-	Cinema_id int REFERENCES Cinema(Cinema_id),
-	Movie_id int REFERENCES Movie(Movie_id),
-	Seat_num int NOT NULL
-);
-
-CREATE TABLE Seat (
-	Seat_id serial PRIMARY KEY NOT NULL,
-	seat_row int NOT NULL,
-	seat_column int NOT NULL,
-	status boolean NOT NULL,
-	Hall_id int REFERENCES Hall(Hall_id)
-);
-
-CREATE TABLE Ticket (
-	Ticket_id serial PRIMARY KEY NOT NULL,
-	user_id int REFERENCES Users(User_id),
-	hall_id int REFERENCES Hall(Hall_id),
-	seat_id int REFERENCES Seat(Seat_id),
-	time_reserved date,
-	is_cancelled boolean
-);
 
 
 
 
-
+-- insert cimena info
 INSERT INTO Cinema (name, city, address,info, score, hall_num) values ('Azadi', 'tehran', 'blv beheshti khaled 8', 'nothings', 8.1, 3 );
 INSERT INTO Cinema (name, city, address,info, score, hall_num) values ('PardeTalaei', 'tehran', 'blv valiAsr blv mehr', 'nothings', 9.4, 7 );
 INSERT INTO Cinema (name, city, address,info, score, hall_num) values ('Shemiran', 'tehran', 'blv army shemiran 3', 'nothings', 8.8, 5 );
@@ -67,7 +16,7 @@ INSERT INTO Cinema (name, city, address,info, score, hall_num) values ('park-baz
 
 
 
-
+-- insert movie info
 INSERT INTO Movie (name, genre, rate, description) values ('hotel', 'komedi', 8.8, 'ke behesht ro vel mikoneh mire jahanam!!');
 INSERT INTO Movie (name, genre, rate, description) values ('bache-zerang', 'children', 8.1, 'jangali asrar amiz ba heyvanat mongharez shode');
 INSERT INTO Movie (name, genre, rate, description) values ('hawaii', 'komedi', 5.2, '');
@@ -76,7 +25,7 @@ INSERT INTO Movie (name, genre, rate, description) values ('fosil', 'komedi', 8.
 
 
 
-
+-- insert users info
 INSERT INTO Users(first_name, last_name, email, phone, birthday) values ('Arash', 'soheili', 'arash@gmail.com', 09121457495, '2000-03-24');
 INSERT INTO Users(first_name, last_name, email, phone, birthday) values ('muhammad', 'vahidi', 'muhammad@gmail.com', 09152487164, '1945-02-14');
 INSERT INTO Users(first_name, last_name, email, phone, birthday) values ('matin', 'babaki', 'matin@gmail.com', 09354987495, '1985-09-24');
@@ -90,7 +39,7 @@ INSERT INTO Users(first_name, last_name, email, phone, birthday) values ('sohrab
 
 
 
-
+-- insert hall info
 INSERT INTO Hall(hall_id , cinema_id, movie_id, seat_num, num_hall) values (64, 2, 5, 250, 1);
 INSERT INTO Hall(hall_id , cinema_id, movie_id, seat_num, num_hall) values (2, 2, 4, 50, 2);
 INSERT INTO Hall(hall_id , cinema_id, movie_id, seat_num, num_hall) values (3, 2, 1, 100, 3);
@@ -156,6 +105,7 @@ INSERT INTO Hall(hall_id , cinema_id, movie_id, seat_num, num_hall) values (62, 
 INSERT INTO Hall(hall_id , cinema_id, movie_id, seat_num, num_hall) values (63, 11, 1, 75, 7);
 
 
+-- insert seat info
 INSERT INTO Seat(seat_row, seat_column, status, hall_id) values (1,1,true, 2);
 INSERT INTO Seat(seat_row, seat_column, status, hall_id) values (1,2,true, 2);
 INSERT INTO Seat(seat_row, seat_column, status, hall_id) values (1,3,true, 2);
@@ -208,7 +158,7 @@ INSERT INTO Seat(seat_row, seat_column, status, hall_id) values (5,9,true, 2);
 INSERT INTO Seat(seat_row, seat_column, status, hall_id) values (5,10,true, 2);
 
 
-
+-- insert ticket info
 INSERT INTO Ticket(user_id, cinema_id, hall_id, seat_id, time_reserved, is_cancelled) values (1, 2, 2, 45, '2023-03-24',false);
 INSERT INTO Ticket(user_id, cinema_id, hall_id, seat_id, time_reserved, is_cancelled) values (2, 4, 2, 45,'2023-03-24', false);
 INSERT INTO Ticket(user_id, cinema_id, hall_id, seat_id, time_reserved, is_cancelled) values (3, 2, 2, 45,'2023-03-24', false);
